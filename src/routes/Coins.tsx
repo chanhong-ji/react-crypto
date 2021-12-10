@@ -15,12 +15,13 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.textBg};
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
@@ -62,6 +63,22 @@ interface ICoin {
   type: string;
 }
 
+const Moon = styled.div`
+  position: absolute;
+  right: 0;
+  top: 20px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #f7e545;
+  div {
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background-color: ${(props) => props.theme.bgColor};
+  }
+`;
+
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
@@ -70,6 +87,9 @@ function Coins() {
         <title>Coin</title>
       </Helmet>
       <Header>
+        <Moon>
+          <div></div>
+        </Moon>
         <Title>Coin</Title>
       </Header>
       {isLoading ? (

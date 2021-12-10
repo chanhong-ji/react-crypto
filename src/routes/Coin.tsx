@@ -31,11 +31,12 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.textBg};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -64,7 +65,7 @@ const Tab = styled.span<{ isActive: Boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.textBg};
   padding: 7px 0px;
   border-radius: 10px;
   a {
@@ -72,6 +73,15 @@ const Tab = styled.span<{ isActive: Boolean }>`
   }
   color: ${(props) =>
     props.isActive ? props.theme.accentColor : props.theme.textColor};
+`;
+const BackBtn = styled.div`
+  padding: 5px 10px;
+  background-color: ${(props) => props.theme.textBg};
+  font-size: 10px;
+  border-radius: 5px;
+  position: absolute;
+  right: 0;
+  bottom: 10px;
 `;
 
 interface IRouteParams {
@@ -161,12 +171,18 @@ const Coin = () => {
         </title>
       </Helmet>
       <Header>
+        <BackBtn>
+          <Link to="/">Go Back</Link>
+        </BackBtn>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
       </Header>
       {loading ? (
-        <Loader>Loading...</Loader>
+        <>
+          <BackBtn>Go Back</BackBtn>
+          <Loader>Loading...</Loader>
+        </>
       ) : (
         <>
           <Overview>
@@ -206,7 +222,7 @@ const Coin = () => {
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price />
+              <Price coinId={coinId} />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />

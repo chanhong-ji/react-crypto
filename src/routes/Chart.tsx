@@ -18,20 +18,25 @@ interface IChartData {
 }
 
 const Chart = ({ coinId }: IChart) => {
-  const { isLoading, data } = useQuery<IChartData[]>(["chart", coinId], () =>
-    fetchCoinHistory(coinId)
+  const { isLoading, data: chartData } = useQuery<IChartData[]>(
+    ["chart", coinId],
+    () => fetchCoinHistory(coinId)
   );
+
   return (
     <div>
       {isLoading ? (
         "Loading charts..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
               name: "Price",
-              data: data?.map((price) => price.close),
+              data: chartData?.map((day) => ({
+                x: day.time_close,
+                y: [day.open, day.high, day.low, day.close],
+              })),
             },
           ]}
           options={{
@@ -39,37 +44,26 @@ const Chart = ({ coinId }: IChart) => {
               mode: "dark",
             },
             chart: {
-              height: 300,
-              width: 500,
+              type: "candlestick",
+              height: 350,
               toolbar: {
                 show: false,
               },
               background: "transparent",
             },
-            grid: { show: false },
-            stroke: {
-              curve: "smooth",
-              width: 4,
+            title: {
+              text: "CandleStick Chart",
+              align: "left",
             },
+            grid: { show: false },
             yaxis: {
               show: false,
+              tooltip: {
+                enabled: true,
+              },
             },
             xaxis: {
-              axisBorder: { show: false },
-              axisTicks: { show: false },
-              labels: { show: false },
               type: "datetime",
-              categories: data?.map((price) => price.time_close),
-            },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-            },
-            colors: ["#0fbcf9"],
-            tooltip: {
-              y: {
-                formatter: (value) => `$${value.toFixed(2)}`,
-              },
             },
           }}
         />
