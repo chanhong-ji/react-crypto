@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components"; //전역스코프에 올려준다.
 import Router from "./Router";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;800&family=Rubik:wght@500&display=swap');
@@ -72,6 +73,7 @@ function App() {
       <>
         <GlobalStyle />
         <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
       </>
     </div>
   );
