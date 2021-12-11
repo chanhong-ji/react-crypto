@@ -213,7 +213,14 @@ const Coin = () => {
 
           <Tabs>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link
+                to={{
+                  pathname: `/${coinId}/price`,
+                  state: { data: tickerData },
+                }}
+              >
+                Price
+              </Link>
             </Tab>
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
