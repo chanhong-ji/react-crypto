@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -21,7 +23,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: ${(props) => props.theme.textBg};
+  background-color: ${(props) => props.theme.cardBgColor};
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
@@ -63,7 +65,7 @@ interface ICoin {
   type: string;
 }
 
-const Moon = styled.div`
+const Moon = styled.div<{ mode: boolean }>`
   position: absolute;
   right: 0;
   top: 20px;
@@ -71,7 +73,11 @@ const Moon = styled.div`
   height: 35px;
   border-radius: 50%;
   background-color: #f7e545;
+  &:hover {
+    cursor: grab;
+  }
   div {
+    display: ${(props) => (props.mode ? "span" : "none")};
     width: 23px;
     height: 23px;
     border-radius: 50%;
@@ -81,13 +87,17 @@ const Moon = styled.div`
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((current) => !current);
   return (
     <Container>
       <Helmet>
+        ``
         <title>Coin</title>
       </Helmet>
       <Header>
-        <Moon>
+        <Moon mode={isDark} onClick={toggleDarkAtom}>
           <div></div>
         </Moon>
         <Title>Coin</Title>

@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 const ChartBox = styled.div`
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: ${(props) => props.theme.cardBgColor};
   padding: 20px 30px;
   border-radius: 10px;
   display: flex;

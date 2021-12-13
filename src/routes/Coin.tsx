@@ -36,7 +36,7 @@ const Header = styled.header`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.textBg};
+  background-color: ${(props) => props.theme.cardBgColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -65,7 +65,7 @@ const Tab = styled.span<{ isActive: Boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: ${(props) => props.theme.textBg};
+  background-color: ${(props) => props.theme.cardBgColor};
   padding: 7px 0px;
   border-radius: 10px;
   a {
@@ -76,7 +76,7 @@ const Tab = styled.span<{ isActive: Boolean }>`
 `;
 const BackBtn = styled.div`
   padding: 5px 10px;
-  background-color: ${(props) => props.theme.textBg};
+  background-color: ${(props) => props.theme.cardBgColor};
   font-size: 10px;
   border-radius: 5px;
   position: absolute;
@@ -196,7 +196,7 @@ const Coin = () => {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>{tickerData?.quotes.USD.price.toFixed(3)}</span>
+              <span>{tickerData?.quotes?.USD?.price?.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -229,7 +229,7 @@ const Coin = () => {
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price coinId={coinId} />
+              <Price />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />
