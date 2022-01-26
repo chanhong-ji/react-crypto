@@ -27,11 +27,11 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 15vh;
+  height: 13vh;
+  padding-top: 3vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  position: relative;
 `;
 const Overview = styled.div`
   display: flex;
@@ -79,9 +79,7 @@ const BackBtn = styled.div`
   background-color: ${(props) => props.theme.cardBgColor};
   font-size: 10px;
   border-radius: 5px;
-  position: absolute;
-  right: 0;
-  bottom: 10px;
+  align-self: flex-end;
 `;
 
 interface IRouteParams {
@@ -171,16 +169,15 @@ const Coin = () => {
         </title>
       </Helmet>
       <Header>
-        <BackBtn>
-          <Link to="/">Go Back</Link>
-        </BackBtn>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
+        <BackBtn>
+          <Link to="/">&larr; Go Back</Link>
+        </BackBtn>
       </Header>
       {loading ? (
         <>
-          <BackBtn>Go Back</BackBtn>
           <Loader>Loading...</Loader>
         </>
       ) : (
