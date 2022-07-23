@@ -1,8 +1,8 @@
-import { useQuery } from "react-query";
-import { fetchCoinHistory } from "../api";
-import ApexChart from "react-apexcharts";
-import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "../atoms";
+import { useQuery } from 'react-query';
+import { fetchCoinHistory } from '../api';
+import ApexChart from 'react-apexcharts';
+import { useRecoilValue } from 'recoil';
+import { isDarkAtom } from '../atoms';
 
 interface IChart {
   coinId: string;
@@ -21,7 +21,7 @@ interface IChartData {
 
 const Chart = ({ coinId }: IChart) => {
   const { isLoading, data: chartData } = useQuery<IChartData[]>(
-    ["chart", coinId],
+    ['chart', coinId],
     () => fetchCoinHistory(coinId)
   );
   const isDark = useRecoilValue(isDarkAtom);
@@ -29,14 +29,14 @@ const Chart = ({ coinId }: IChart) => {
   return (
     <div>
       {isLoading ? (
-        "Loading charts..."
-      ) : (
+        'Loading charts...'
+      ) : chartData && chartData.length >= 1 ? (
         <ApexChart
-          type="candlestick"
+          type='candlestick'
           series={[
             {
-              name: "Price",
-              data: chartData?.map((day) => ({
+              name: 'Price',
+              data: chartData.map((day) => ({
                 x: day.time_close,
                 y: [day.open, day.high, day.low, day.close],
               })),
@@ -44,19 +44,19 @@ const Chart = ({ coinId }: IChart) => {
           ]}
           options={{
             theme: {
-              mode: isDark ? "dark" : "light",
+              mode: isDark ? 'dark' : 'light',
             },
             chart: {
-              type: "candlestick",
+              type: 'candlestick',
               height: 350,
               toolbar: {
                 show: false,
               },
-              background: "transparent",
+              background: 'transparent',
             },
             title: {
-              text: "CandleStick Chart",
-              align: "left",
+              text: 'CandleStick Chart',
+              align: 'left',
             },
             grid: { show: false },
             yaxis: {
@@ -66,11 +66,11 @@ const Chart = ({ coinId }: IChart) => {
               },
             },
             xaxis: {
-              type: "datetime",
+              type: 'datetime',
             },
           }}
         />
-      )}
+      ) : null}
     </div>
   );
 };

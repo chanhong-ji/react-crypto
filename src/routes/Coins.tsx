@@ -1,10 +1,10 @@
-import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { fetchCoins } from "../api";
-import { Helmet } from "react-helmet";
-import { useRecoilState } from "recoil";
-import { isDarkAtom } from "../atoms";
+import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { fetchCoins } from '../api';
+import { Helmet } from 'react-helmet';
+import { useRecoilState } from 'recoil';
+import { isDarkAtom } from '../atoms';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -65,7 +65,7 @@ interface ICoin {
   type: string;
 }
 
-const Moon = styled.div<{ mode: boolean }>`
+const Moon = styled.div<{ mode: string }>`
   position: absolute;
   right: 0;
   top: 20px;
@@ -77,7 +77,7 @@ const Moon = styled.div<{ mode: boolean }>`
     cursor: grab;
   }
   div {
-    display: ${(props) => (props.mode ? "span" : "none")};
+    display: ${(props) => (props.mode === 'dark' ? 'span' : 'none')};
     width: 23px;
     height: 23px;
     border-radius: 50%;
@@ -86,7 +86,7 @@ const Moon = styled.div<{ mode: boolean }>`
 `;
 
 function Coins() {
-  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const { isLoading, data } = useQuery<ICoin[]>('allCoins', fetchCoins);
   const [isDark, setDark] = useRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDark((current) => !current);
   return (
@@ -95,7 +95,7 @@ function Coins() {
         <title>Coin</title>
       </Helmet>
       <Header>
-        <Moon mode={isDark} onClick={toggleDarkAtom}>
+        <Moon mode={isDark ? 'dark' : 'light'} onClick={toggleDarkAtom}>
           <div></div>
         </Moon>
         <Title>Coin</Title>
@@ -110,8 +110,8 @@ function Coins() {
                 to={{ pathname: `/${coin.id}`, state: { name: coin.name } }}
               >
                 <Img
-                  src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
-                  alt=""
+                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  alt=''
                 />
                 {coin.name} &rarr;
               </Link>
