@@ -27,6 +27,7 @@ const Coin = styled.li`
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   a {
     padding: 20px;
     transition: color 0.2s ease-in;
@@ -55,16 +56,6 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface ICoin {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
-
 const Moon = styled.div<{ mode: string }>`
   position: absolute;
   right: 0;
@@ -84,6 +75,16 @@ const Moon = styled.div<{ mode: string }>`
     background-color: ${(props) => props.theme.bgColor};
   }
 `;
+
+interface ICoin {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+}
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>('allCoins', fetchCoins);

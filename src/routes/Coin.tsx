@@ -4,14 +4,14 @@ import {
   useLocation,
   useParams,
   useRouteMatch,
-} from "react-router";
-import styled from "styled-components";
-import Price from "./Price";
-import Chart from "./Chart";
-import { Link } from "react-router-dom";
-import { fetchCoinInfo, fetchCoinPriceInfo } from "../api";
-import { useQuery } from "react-query";
-import { Helmet } from "react-helmet";
+} from 'react-router';
+import styled from 'styled-components';
+import Price from './Price';
+import Chart from './Chart';
+import { Link } from 'react-router-dom';
+import { fetchCoinInfo, fetchCoinPriceInfo } from '../api';
+import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet';
 
 const Title = styled.h1`
   font-size: 48px;
@@ -27,11 +27,11 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 13vh;
   padding-top: 3vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 `;
 const Overview = styled.div`
   display: flex;
@@ -39,6 +39,7 @@ const Overview = styled.div`
   background-color: ${(props) => props.theme.cardBgColor};
   padding: 10px 20px;
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 `;
 const OverviewItem = styled.div`
   display: flex;
@@ -53,6 +54,7 @@ const OverviewItem = styled.div`
 `;
 const Description = styled.p`
   margin: 20px 0px;
+  line-height: 1.3;
 `;
 const Tabs = styled.div`
   display: grid;
@@ -68,6 +70,7 @@ const Tab = styled.span<{ isActive: Boolean }>`
   background-color: ${(props) => props.theme.cardBgColor};
   padding: 7px 0px;
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   a {
     display: block;
   }
@@ -77,9 +80,12 @@ const Tab = styled.span<{ isActive: Boolean }>`
 const BackBtn = styled.div`
   padding: 5px 10px;
   background-color: ${(props) => props.theme.cardBgColor};
-  font-size: 10px;
+  font-size: 13px;
   border-radius: 5px;
   align-self: flex-end;
+  margin-bottom: 20px;
+  margin-top: 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
 interface IRouteParams {
@@ -152,11 +158,11 @@ const Coin = () => {
   const chartMatch = useRouteMatch(`/${coinId}/chart`);
 
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
-    ["coin", coinId],
+    ['coin', coinId],
     () => fetchCoinInfo(coinId)
   );
   const { isLoading: tickerLoading, data: tickerData } = useQuery<IPriceData>(
-    ["ticker", coinId],
+    ['ticker', coinId],
     () => fetchCoinPriceInfo(coinId),
     { refetchInterval: 10000 }
   );
@@ -165,15 +171,15 @@ const Coin = () => {
     <Container>
       <Helmet>
         <title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
         </title>
       </Helmet>
       <Header>
         <Title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
         </Title>
         <BackBtn>
-          <Link to="/">&larr; Go Back</Link>
+          <Link to='/'>&larr; Go Back</Link>
         </BackBtn>
       </Header>
       {loading ? (

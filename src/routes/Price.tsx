@@ -1,5 +1,5 @@
-import { useLocation } from "react-router-dom";
-import styled from "styled-components";
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 const ChartBox = styled.div`
   background-color: ${(props) => props.theme.cardBgColor};
@@ -8,13 +8,14 @@ const ChartBox = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.4;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 `;
 
 const ChartLine = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  margin-bottom: 3px;
+  margin-bottom: 6px;
 `;
 
 interface IPriceData {
